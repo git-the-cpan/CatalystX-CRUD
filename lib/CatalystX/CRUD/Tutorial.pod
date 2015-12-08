@@ -406,7 +406,7 @@ L<CatalystX::CRUD::Controller> documentation for more details.
 CatalystX::CRUD is View-agnostic, so this tutorial will not cover the generation
 of templates. You can see examples of CatalystX::CRUD-friendly 
 Template Toolkit templates in the
-Rose::DBx::Garden::Catalyst::Templates module on CPAN.
+L<Rose::DBx::Garden::Catalyst::Templates> module on CPAN.
 
 =head2 Start Up
 
@@ -445,6 +445,10 @@ You can find documentation for this module with the perldoc command.
 You can also look for information at:
 
 =over 4
+
+=item * Mailing List
+
+L<https://groups.google.com/forum/#!forum/catalystxcrud>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 

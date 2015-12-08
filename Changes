@@ -1,5 +1,8 @@
 Revision history for CatalystX-CRUD
 
+0.57 07 Dec 2015
+ - failure to load object now returns 404 rather than throwing a 500.
+
 0.56 28 Feb 2014
  - remove : character from rxOp param in internal Search::QueryParser::SQL
    constructor. This allows for finding url values like http://foo/bar

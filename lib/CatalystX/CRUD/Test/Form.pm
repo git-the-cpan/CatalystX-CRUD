@@ -7,7 +7,7 @@ use base qw( Class::Accessor::Fast );
 
 __PACKAGE__->mk_accessors(qw( params fields ));
 
-our $VERSION = '0.56';
+our $VERSION = '0.57';
 
 =head1 NAME
 

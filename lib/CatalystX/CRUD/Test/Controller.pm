@@ -8,7 +8,7 @@ use mro 'c3';
 
 __PACKAGE__->mk_accessors(qw( form_fields ));
 
-our $VERSION = '0.56';
+our $VERSION = '0.57';
 
 =head1 NAME
 
@@ -129,8 +129,8 @@ sub end : Private {
     if ( $self->has_errors($c) ) {
         my $err = join( "\n", @{ $c->error } );
         $c->log->error($err) if $c->debug;
-        $c->res->body($err);
-        $c->res->status(500);
+        $c->res->body($err) unless $c->res->body;
+        $c->res->status(500) unless $c->res->status;
         $c->clear_errors;
     }
 }

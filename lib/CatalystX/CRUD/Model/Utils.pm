@@ -9,7 +9,7 @@ use Carp;
 
 __PACKAGE__->mk_accessors(qw( use_ilike use_lower ne_sign ));
 
-our $VERSION = '0.56';
+our $VERSION = '0.57';
 
 =head1 NAME
 
@@ -136,6 +136,7 @@ sub _which_sort {
         return $params->{$p} if defined $params->{$p};
     }
 
+    # use explicit param
     for my $p (qw( cxc-sort _sort )) {
         my $dir = $params->{'cxc-dir'}
             || $params->{'_dir'};

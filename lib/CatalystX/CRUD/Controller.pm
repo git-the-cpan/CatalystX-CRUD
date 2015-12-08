@@ -13,6 +13,7 @@ use CatalystX::CRUD::Results;
 use MRO::Compat;
 use mro 'c3';
 use Data::Dump qw( dump );
+use Try::Tiny;
 
 __PACKAGE__->mk_accessors(
     qw(
@@ -42,7 +43,7 @@ __PACKAGE__->config(
 # apply Role *after* we declare accessors above
 with 'CatalystX::CRUD::ControllerRole';
 
-our $VERSION = '0.56';
+our $VERSION = '0.57';
 
 =head1 NAME
 
@@ -170,10 +171,20 @@ sub fetch : Chained('/') PathPrefix CaptureArgs(1) {
     }
     my @arg = ( defined $pk_is_null || !$id ) ? () : (@pk);
     $c->log->debug( "fetch: " . dump \@arg ) if $c->debug;
-    $c->stash->{object} = $self->do_model( $c, 'fetch', @arg );
-    if ( $self->has_errors($c) or !$c->stash->{object} ) {
-        $self->throw_error( 'No such ' . $self->model_name );
+
+    try {
+        $c->stash->{object} = $self->do_model( $c, 'fetch', @arg );
+        if ( $self->has_errors($c) or !$c->stash->{object} ) {
+            $self->throw_error( 'No such ' . $self->model_name );
+        }
     }
+    catch {
+        $c->res->status(404);
+        $c->res->body( 'No such ' . $self->model_name );
+
+        # re-throw so we interrupt chain.
+        $self->throw_error($_);
+    };
 }
 
 =head2 create
@@ -519,7 +530,8 @@ sub remove : PathPart Chained('related') Args(0) {
     $self->_check_idempotent($c);
     return if $self->has_errors($c);
     $self->do_model(
-        $c, 'rm_related', $c->stash->{object},
+        $c, 'rm_related',
+        $c->stash->{object},
         $c->stash->{rel_name},
         $c->stash->{foreign_pk_value}
     );
@@ -550,7 +562,8 @@ sub add : PathPart Chained('related') Args(0) {
     $self->_check_idempotent($c);
     return if $self->has_errors($c);
     $self->do_model(
-        $c, 'add_related', $c->stash->{object},
+        $c, 'add_related',
+        $c->stash->{object},
         $c->stash->{rel_name},
         $c->stash->{foreign_pk_value}
     );
@@ -591,10 +604,11 @@ sub list_related : PathPart('list') Chained('fetch_related') Args(0) {
     }
     return if $self->has_errors($c);
     $self->view($c);    # set form
-    my $results
-        = $self->do_model( $c, 'iterator_related', $c->stash->{object},
+    my $results = $self->do_model(
+        $c, 'iterator_related',
+        $c->stash->{object},
         $c->stash->{rel_name},
-        );
+    );
     $c->stash( results => $results );
 }
 
@@ -621,7 +635,8 @@ sub view_related : PathPart('view') Chained('related') Args(0) {
     return if $self->has_errors($c);
     $self->view($c);    # set form
     my $result = $self->do_model(
-        $c, 'find_related', $c->stash->{object},
+        $c, 'find_related',
+        $c->stash->{object},
         $c->stash->{rel_name},
         $c->stash->{foreign_pk_value}
     );
@@ -953,6 +968,10 @@ You can find documentation for this module with the perldoc command.
 You can also look for information at:
 
 =over 4
+
+=item * Mailing List
+
+L<https://groups.google.com/forum/#!forum/catalystxcrud>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 

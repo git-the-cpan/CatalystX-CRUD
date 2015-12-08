@@ -1,4 +1,4 @@
-use Test::More tests => 54;
+use Test::More tests => 56;
 use strict;
 use lib qw( lib t/lib );
 use_ok('CatalystX::CRUD::Model::File');
@@ -181,5 +181,9 @@ like( $res->content, qr/content => undef/, "file nuked" );
 ok( $res = request('/rest/file'), "/ request with no items" );
 
 #dump $res;
-is( $res->code, 200, "/ request with no items == 200" );
-is( $res->content, "", "no content for no results" );
+is( $res->code,    200, "/ request with no items == 200" );
+is( $res->content, "",  "no content for no results" );
+
+# request something we know doesn't exist
+ok( $res = request('/rest/file/nosuchfile'), "/ request with nosuchfile" );
+is( $res->code, 404, "nosuchfile == 404" );

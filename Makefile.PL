@@ -25,4 +25,10 @@ WriteMakefile(
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'CatalystX-CRUD-*' },
+    META_MERGE => {
+        resources => {
+            repository =>
+                'https://github.com/karpet/catalystx-crud',
+        },
+    },
 );

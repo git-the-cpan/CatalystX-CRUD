@@ -13,4 +13,4 @@ ok( $res = request(
     "GET new file with null pk"
 );
 
-is( $res->code, 500, "exception thrown" );
+is( $res->code, 404, "no such file returns 404" );

@@ -173,3 +173,62 @@ sub model_can {
 }
 
 1;
+
+__END__
+
+=head1 AUTHOR
+
+Peter Karman, C<< <perl at peknet.com> >>
+
+=head1 BUGS
+
+Please report any bugs or feature requests to
+C<bug-catalystx-crud at rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=CatalystX-CRUD>.
+I will be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc CatalystX::CRUD
+
+You can also look for information at:
+
+=over 4
+
+=item * Mailing List
+
+L<https://groups.google.com/forum/#!forum/catalystxcrud>
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/CatalystX-CRUD>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/CatalystX-CRUD>
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=CatalystX-CRUD>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/CatalystX-CRUD>
+
+=back
+
+=head1 ACKNOWLEDGEMENTS
+
+Thanks to Zbigniew Lukasiak and Matt Trout for feedback and API ideas.
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2007 Peter Karman, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
